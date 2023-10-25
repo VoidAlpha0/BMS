@@ -1,0 +1,196 @@
+<div class="container-fluid bg">
+  <div class="text-center text-white pt-2">
+    <h2><b><i>BlackPoolBus</i></b></h2>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 text-light rounded py-12">
+      <div class="p-4 md-3">
+        <div *ngIf="user">
+          <h3><b>Welcome to BlackPoolBus! <span class="text-danger"><i>{{user.userName}}</i></span></b></h3>
+          <button class="btn btn-danger float-right" (click)="logout()">Logout</button>
+          <small><b>User Id: {{ user.userId }}</b></small><br />
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+
+  <div class="opacity jumbotron m-2 p-3">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card bg2">
+          <div class="card-body">
+            <h3 class="card-title">My Bookings</h3>
+            <p class="card-text">User can view booking details from here.</p>
+            <button class="btn btn-danger" (click)="getBookings()">My Bookings</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card bg2">
+          <div class="card-body">
+            <h3 class="card-title">Profile</h3>
+            <p class="card-text">User can view User details from here.</p>
+            <button class="btn btn-danger" routerLink="/viewUser">View Profile</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card bg2">
+          <div class="card-body">
+            <h3 class="card-title">Update Profile</h3>
+            <p class="card-text">User can update User Profile & Password.</p>
+            <button class="btn btn-danger" routerLink="/updateUser">Update Profile</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
+  <div  class=" jumbotron   jb1 bg1 ">
+    <form [formGroup]="searchForm" (ngSubmit)="search()">
+      <div class=" row justify-content-center">
+        <div class="form-group col-sm-3">
+          <label for="dep">From</label>
+          <select formControlName="departureBusstop" class="form-control"  >
+            <option value="" disabled selected>Select a Departure bus stop</option>
+            <option *ngFor="let departure of location" [value]="formatLocation(departure)">{{ formatLocation(departure) }}</option>
+          </select>
+          <small class="text-danger" *ngIf="
+              searchForm.get('departureBusstop').invalid &&
+              searchForm.get('departureBusstop').touched
+            ">*Mandatory Field</small>
+        </div>
+
+        <div class="form-group col-sm-3">
+          <label for="ari">To</label>
+          <select formControlName="arrivalBusstop" class="form-control" >
+            <option value="" disabled selected>Select an Arrival bus stop</option>
+            <option *ngFor="let departure of location" [value]="formatLocation(departure)">{{ formatLocation(departure) }}</option>
+          </select>
+          <small class="text-danger" *ngIf="
+              searchForm.get('arrivalBusstop').invalid &&
+              searchForm.get('arrivalBusstop').touched
+            ">*Mandatory Field</small>
+        </div>
+
+        <div class="form-group col-sm-2">
+          <label for="date">Date</label>
+          <input type="date" placeholder="DD-MM-YYYY" id="date" class="form-control" formControlName="date" />
+        </div>
+        <div class="form-group col-sm-2 p-2">
+          <br>
+          <input type="submit" style="width: 200px;" class="btn btn-danger"
+            value="Search" />
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <h2 class="text-red bg-warning" align="center">{{ notFound }}</h2>
+
+  <div class="jumbotron jb1 bg1" *ngIf="found">
+    <div class="row r1">
+      <div class="col-6">
+        <h6><b>Bus Number</b></h6>
+      </div>
+      <div class="col-6">
+        <h6>:&nbsp;&nbsp;&nbsp;{{ bus.busNumber }}</h6>
+      </div>
+    </div>
+
+    <div class="row r1">
+      <div class="col-6">
+        <h6><b>From</b></h6>
+      </div>
+      <div class="col-6">
+        <h6>:&nbsp;&nbsp;&nbsp;{{ bus.departureBusstop }}</h6>
+      </div>
+    </div>
+
+    <div class="row r1">
+      <div class="col-6">
+        <h6><b>To</b></h6>
+      </div>
+      <div class="col-6">
+        <h6>:&nbsp;&nbsp;&nbsp;{{ bus.arrivalBusstop }}</h6>
+      </div>
+    </div>
+
+    <div class="row r1">
+      <div class="col-6">
+        <h6><b>Departure date</b></h6>
+      </div>
+      <div class="col-6">
+        <h6>:&nbsp;&nbsp;&nbsp;{{ bus.departureDate }}</h6>
+      </div>
+    </div>
+
+    <div class="row r1">
+      <div class="col-6">
+        <h6><b>Departure Time</b></h6>
+      </div>
+      <div class="col-6">
+        <h6>:&nbsp;&nbsp;&nbsp;{{ bus.departureTime }}</h6>
+      </div>
+    </div>
+
+    <div class="row r1">
+      <div class="col-6">
+        <h6><b>Arrival Date</b></h6>
+      </div>
+      <div class="col-6">
+        <h6>:&nbsp;&nbsp;&nbsp;{{ bus.arrivalDate }}</h6>
+      </div>
+    </div>
+
+    <div class="row r1">
+      <div class="col-6">
+        <h6><b>Arrival Time</b></h6>
+      </div>
+      <div class="col-6">
+        <h6>:&nbsp;&nbsp;&nbsp;{{ bus.arrivalTime }}</h6>
+      </div>
+    </div>
+
+    <div class="row r1">
+      <div class="col-6">
+        <h6><b>Cost</b></h6>
+      </div>
+      <div class="col-6">
+        <h6>:&nbsp;&nbsp;&nbsp;{{ bus.cost | currency:'INR' }}</h6>
+      </div>
+    </div>
+    
+    <div class="row r1">
+      <div class="col-6">
+        <h6><b>Available Seats </b></h6>
+      </div>
+      <div class="col-6">
+        <h6>:&nbsp;&nbsp;&nbsp;{{ bus.availableSeats }}</h6>
+      </div>
+    </div>
+    
+    <br><br>
+    <div  *ngIf="bus.availableSeats <= 0">
+      <h3 style="margin-left: 30%; color: red;" >No Seats Available Sorry!!!</h3>
+    </div> <br>
+    <div style="margin-left: 36%;">
+      <button class="btn btn-danger" (click)="addPassengers()" [disabled]="bus.availableSeats <= 0">Add Passengers</button>
+    </div>
+    
+  
+  </div>
+  <br><br>
+</div>
+
+<footer class="bg-dark text-center text-white">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2023 Copyright:
+      <a class="text-white" style="text-decoration: none;" href="#">BlackPoolBus</a>
+  </div>
+
+</footer>

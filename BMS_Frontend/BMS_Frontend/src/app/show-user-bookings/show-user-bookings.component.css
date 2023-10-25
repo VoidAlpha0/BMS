@@ -1,0 +1,45 @@
+.bg {
+  /* The image used */
+
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.73)),
+      url("https://img.freepik.com/free-photo/young-man-city-bus-stop-generative-ai_169016-28710.jpg?w=826&t=st=1697606634~exp=1697607234~hmac=5f111340aa5cabd7ec4a78fd8be4bc6450d7f610bad42a318f0cc8c1b7d8dc99");
+  /* Full height */
+  height: 1000px;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.bg1{
+
+  background-image: linear-gradient(to bottom, #73c8a98a 0%, #373b4484 60%);
+  background-size: cover;
+  /* background-image: ; */
+
+}
+
+.jb1 {
+
+  width: 1210px;
+  padding: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.table.table-striped td {
+  background-color: #f9f9f9; /* Cell background color */
+}
+
+.panel.bg1 h4 {
+  color: white;
+}
+
+.panel-body * {
+  color: white;
+}
+
+.textleft{
+  text-align: right;
+}

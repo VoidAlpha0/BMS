@@ -1,0 +1,80 @@
+<nav class="navbar navbar-expand-sm fixed-top navbar-light bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/home">
+            <h3 class="text-white"><b>BlackPoolBus</b></h3>
+        </a>
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link text-white" routerLink="/userLogin"><b>Login</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" routerLink="/addUser"><b>Register</b></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid bg">
+
+    <div class="row">
+      <div class="col-sm-9 p-5 mt-5">
+        <h2 class="m-1 p-1 text-white"><b><i>Welcome to BlackPoolBus!</i></b></h2>
+        <p class = "text-light"><i>"Welcome Admin .Hope you will have a great working day."</i></p>
+
+      </div>
+
+        <div class="col-sm-3 bg-light box pt5 box">
+            <form class="form pt-5 mt-5" [formGroup]="loginForm" (ngSubmit)="submit()"><br>
+                <div class="alert-warning" *ngIf="failure.value">Invalid Id or Password</div>
+                <h3 class="text-bolder"><b>Admin Login</b></h3><br><br>
+                <!----------- admin id-------- -->
+
+
+                <div *ngIf="loginForm.get('adminUName').invalid && loginForm.get('adminUName').touched">
+                    <small *ngIf="loginForm.get('adminUName').errors?.required" class="text-danger">*Admin Uname is mandatory</small>
+                </div>
+                <div class="form-group">
+                    <label for="adminUName">Login Uname</label> <!-- Change the label to "Login Uname" -->
+                    <input type="text"
+                      [class.is-invalid]="loginForm.get('adminUName').invalid && loginForm.get('adminUName').touched"
+                      class="form-control" formControlName="adminUName" placeholder="Enter Admin Uname Here..."> <!-- Change formControlName to "adminUname" -->
+                </div>
+
+                <!------------ password ---------------->
+
+                <div *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+                    <small *ngIf="loginForm.get('password').errors?.minlength" class="text-danger">*Password must be
+                        minimum
+                        8 characters</small>
+                    <small *ngIf="loginForm.get('password').errors?.required" class="text-danger">*Password is
+                        madatory</small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password"
+                        [class.is-invalid]="loginForm.get('password').invalid && loginForm.get('password').touched"
+                        formControlName="password" class="form-control" placeholder="Enter Password Here...">
+                </div>
+
+                <!-- buttons -->
+                <div class="form-group">
+                    <input [disabled]="!loginForm.valid" type="submit" class="btn btn-danger" style="width: 100%;"
+                        value="Log In"><br>
+                    <br>
+                </div>
+            </form>
+            <br><br><br>
+            <p class="mt-5 pt-5"> Login as User <a style="text-decoration: None;" routerLink="/userLogin">From Here.</a>
+            </p>
+
+        </div>
+    </div>
+
+</div>
+<footer class="bg-dark fixed-bottom text-center text-white">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2023 Copyright:
+      <a class="text-white" style="text-decoration: none;" href="#">BlackPoolBus</a>
+  </div>
+
+</footer>

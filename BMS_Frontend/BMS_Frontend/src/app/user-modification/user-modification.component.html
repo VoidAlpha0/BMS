@@ -1,0 +1,37 @@
+<div class="container-fluid bg">
+  <div class="text-center text-white pt-2">
+    <a routerLink="/user-modification" style="color: white; text-decoration:none;">
+      <h2><b><i>BlackPoolBus</i></b></h2>
+    </a>
+  </div>
+  <button class="btn btn-danger float-left m-1" routerLink="/adminHome">Home</button>
+  <br><br><br>
+  <div class="panel panel-danger bg1 p-1 m-1 rounded">
+    <div class="panel-heading">
+      <h3 class="text-center"><b>List of Users</b></h3>
+    </div><br>
+    <div class="panel-body">
+      <table class="table table-striped" *ngIf="users">
+        <thead class="thead-dark">
+          <tr>
+            <th>User Id</th>
+            <th>User Name</th>
+            <th>Contact No.</th>
+            <th>Email ID</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{user.userId}}</td>
+            <td>{{user.userName}}</td>
+            <td>{{user.phone}}</td>
+            <td>{{user.email}}</td>
+            <!-- <td><button class="btn btn-danger" (click)="updateUser(user.userId)">Update</button></td> -->
+            <td><button class="btn btn-danger" (click)="deleteUser(user.userId)">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

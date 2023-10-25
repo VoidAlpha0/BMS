@@ -1,0 +1,117 @@
+<div class="container-fluid bg">
+  <div class="text-center text-white pt-2">
+    <a routerLink="/adminHome" style="color: white; text-decoration:none;">
+      <h2><b><i>BlackPoolBus</i></b></h2>
+    </a>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 text-light rounded">
+      <div class="p-3 md-2">
+        <h3><b>Welcome, <span class="text-danger"><i>{{adminDetails.adminName}}</i></span></b></h3>
+        <button class="btn btn-danger float-right pd-5" routerLink="/adminLogin" (click)="logout">Logout</button>
+        <div class="px-1 md-5" *ngIf="adminDetails">
+          <small><b>Admin Id: {{adminDetails.adminId}}</b></small>
+        </div>
+        <button class="btn btn-danger float-left" routerLink="/adminHome">Home</button>
+        <button style="margin-left: 25px;" class="btn btn-danger  float-left" routerLink="/allBussDetails">Back</button>
+      </div>
+    </div>
+  </div>
+  <div class="updateBus jumbotron bg1 rounded">
+    <form (ngSubmit)="onSubmit()" [formGroup]="busForm">
+      <h4 class="text-center"><b>Update Bus Details</b></h4>
+      <div class="row">
+        <div class="form-group col-sm-6">
+          <label>Departure Busstop</label>
+          <select formControlName="departureBusstop" [(ngModel)]="bus.departureBusstop" class="form-control">
+            <option value="" disabled selected>Select a Departure bus stop</option>
+            <option *ngFor="let loc of location" [value]="formatLocation(loc)">{{ formatLocation(loc) }}</option>
+          </select>
+          <small class="text-danger"
+            *ngIf="busForm.get('departureBusstop').invalid && busForm.get('departureBusstop').touched">Please fill the departure Busstop</small>
+        </div>
+        <div class="form-group col-sm-6">
+          <label>Arrival Busstop</label>
+          <select formControlName="arrivalBusstop" [(ngModel)]="bus.arrivalBusstop" class="form-control">
+            <option value="" disabled selected>Select an Arrival bus stop</option>
+            <option *ngFor="let arrival of location" [value]="formatLocation(arrival)">{{ formatLocation(arrival) }}</option>
+          </select>
+          <small class="text-danger"
+            *ngIf="busForm.get('arrivalBusstop').invalid && busForm.get('arrivalBusstop').touched">Please fill the arrival Busstop</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <label>Available seats</label>
+          <input type="number" placeholder="Available seats" [(ngModel)]="bus.availableSeats" formControlName="availableSeats"
+            [class.is-invalid]="busForm.get('availableSeats').invalid && busForm.get('availableSeats').touched"
+            class="form-control">
+          <small class="text-danger"
+            *ngIf="busForm.get('availableSeats').invalid && busForm.get('availableSeats').touched">Invalid or no input provided</small>
+        </div>
+        <div class="form-group col-sm-4">
+          <label>Departure Date</label>
+          <input type="date" placeholder="Departure Date" [(ngModel)]="bus.departureDate" formControlName="departureDate"
+            [class.is-invalid]="busForm.get('departureDate').invalid && busForm.get('departureDate').touched"
+            class="form-control">
+          <small class="text-danger"
+            *ngIf="busForm.get('departureDate').invalid && busForm.get('departureDate').touched">Invalid or no date provided</small>
+        </div>
+        <div class="form-group col-sm-4">
+          <label>Arrival Date</label>
+          <input type="date" placeholder="Arrival Date" [(ngModel)]="bus.arrivalDate" formControlName="arrivalDate"
+            [class.is-invalid]="busForm.get('arrivalDate').invalid && busForm.get('arrivalDate').touched"
+            class="form-control">
+          <small class="text-danger"
+            *ngIf="busForm.get('arrivalDate').errors?.required && busForm.get('arrivalDate').invalid && busForm.get('arrivalDate').touched">Mandatory Field</small>
+          <small class="text-danger" *ngIf="busForm.errors?.arrivalDateError">Must be greater than or equal departure date</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6">
+          <label>Arrival Time</label>
+          <input type="time" placeholder="Arrival Time" [(ngModel)]="bus.arrivalTime" formControlName="arrivalTime"
+            [class.is-invalid]="busForm.get('arrivalTime').invalid && busForm.get('arrivalTime').touched"
+            class="form-control">
+          <small class="text-danger"
+            *ngIf="busForm.get('arrivalTime').invalid && busForm.get('arrivalTime').touched">Please fill the arrival time</small>
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="name">Departure Time</label>
+          <input type="time" placeholder="Departure Time" [(ngModel)]="bus.departureTime" formControlName="departureTime"
+            [class.is-invalid]="busForm.get('departureTime').invalid && busForm.get('departureTime').touched"
+            class="form-control">
+          <small class="text-danger"
+            *ngIf="busForm.get('departureTime').invalid && busForm.get('departureTime').touched">Please fill the departure time</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6">
+          <label>Bus Vendor</label>
+          <input type="text" placeholder="Bus Vendor" [(ngModel)]="bus.busVendor" formControlName="busVendor"
+            [class.is-invalid]="busForm.get('busVendor').invalid && busForm.get('busVendor').touched"
+            class="form-control">
+          <small class="text-danger" *ngIf="busForm.get('busVendor').invalid && busForm.get('busVendor').touched">Bus vendor is Required</small>
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="name">Price of Ticket</label>
+          <input type="number" placeholder="Price of Ticket" [(ngModel)]="bus.cost" formControlName="cost"
+            [class.is-invalid]="busForm.get('cost').invalid && busForm.get('cost').touched" class="form-control">
+          <small class="text-danger"
+            *ngIf="busForm.get('cost').invalid && busForm.get('cost').touched">Invalid price provided</small>
+        </div>
+      </div>
+      <div class="row justify-content-center" align="center">
+        <div class="form-group col-sm-5">
+          <input type="submit" value="Update bus" [disabled]="!busForm.valid" class="btn btn-danger form-control">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<footer class="bg-dark fixed-bottom text-center text-white">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2023 Copyright:
+    <a class="text-white" style="text-decoration: none;" href="#">BlackPoolBus</a>
+  </div>
+</footer>

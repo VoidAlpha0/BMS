@@ -1,0 +1,71 @@
+CREATE TABLE `admins` (
+  `admin_id` int NOT NULL,
+  `admin_name` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `adminuname` varchar(255) NOT NULL,
+  PRIMARY KEY (`admin_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `booking_details` (
+  `booking_id` int NOT NULL,
+  `booking_date` varchar(255) DEFAULT NULL,
+  `booking_time` varchar(255) DEFAULT NULL,
+  `bus_number` int DEFAULT NULL,
+  `owner_id` int DEFAULT NULL,
+  `total_cost` double DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  `status` bit(1) DEFAULT NULL,
+  `passenger_count` int DEFAULT NULL,
+  PRIMARY KEY (`booking_id`),
+  KEY `FKk5ttm2pj6nbpwgyhqyf9rt055` (`user_id`),
+  CONSTRAINT `FKk5ttm2pj6nbpwgyhqyf9rt055` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `booking_details_passengers` (
+  `booking_details_booking_id` int NOT NULL,
+  `passengers_passenger_id` int NOT NULL,
+  UNIQUE KEY `UK_r1e60hp79tovn40nubnq1y2wi` (`passengers_passenger_id`),
+  KEY `FKp79rcenxmalp57gfdfl46mc1o` (`booking_details_booking_id`),
+  CONSTRAINT `FKhv6gmalblxsm7b2fko82u3ct8` FOREIGN KEY (`passengers_passenger_id`) REFERENCES `passengers` (`passenger_id`),
+  CONSTRAINT `FKp79rcenxmalp57gfdfl46mc1o` FOREIGN KEY (`booking_details_booking_id`) REFERENCES `booking_details` (`booking_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `bus_details` (
+  `bus_number` int NOT NULL,
+  `arrival_busstop` varchar(255) NOT NULL,
+  `arrival_date` varchar(255) NOT NULL,
+  `arrival_time` varchar(255) NOT NULL,
+  `available_seats` int DEFAULT NULL,
+  `bus_vendor` varchar(255) NOT NULL,
+  `cost` double NOT NULL,
+  `departure_busstop` varchar(255) NOT NULL,
+  `departure_date` varchar(255) NOT NULL,
+  `departure_time` varchar(255) NOT NULL,
+  PRIMARY KEY (`bus_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `location` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `city` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `terminal` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `passengers` (
+  `passenger_id` int NOT NULL,
+  `age` int DEFAULT NULL,
+  `luggage` double DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`passenger_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `user` (
+  `user_id` int NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone` bigint NOT NULL,
+  `user_name` varchar(255) NOT NULL,
+  `uname` varchar(255) NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

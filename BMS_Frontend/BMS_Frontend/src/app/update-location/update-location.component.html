@@ -1,0 +1,58 @@
+<div class="container-fluid bg">
+    <div class="text-center text-white pt-2">
+      <a routerLink="/adminHome" style="color: white; text-decoration:none;">
+        <h2><b><i>BlackPoolBus</i></b></h2>
+      </a>
+    </div>
+    <button class="btn btn-danger float-left" routerLink="/adminHome">Home</button>
+
+
+
+    <div class="container mt-5">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2 class="text-center text-white">Update Location</h2>
+          
+          <form [formGroup]="locationForm" (ngSubmit)="onSubmit(loc.id)">
+            <div class="form-group">
+              
+                <label for="terminal">Terminal:</label>
+                <input type="text" class="form-control" id="terminal" name="terminal" [(ngModel)]="loc.terminal" formControlName="terminal" placeholder="Enter Terminal">
+                <div *ngIf="locationForm.get('terminal').hasError('required')&& locationForm.get('terminal').touched " class="text-danger">
+                  Terminal is required.
+                </div>
+              
+            </div>
+            <div class="form-group">
+              <label for="city">City:</label>
+              <input type="text" class="form-control" id="city" name="city" [(ngModel)]="loc.city" formControlName="city" placeholder="Enter City">
+              <div *ngIf="locationForm.get('city').hasError('required')&& locationForm.get('city').touched" class="text-danger">
+                City is required.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="state">State:</label>
+              <input type="text" class="form-control" id="state" name="state" [(ngModel)]="loc.state" formControlName="state" placeholder="Enter State">
+              <div *ngIf="locationForm.get('state').hasError('required')&& locationForm.get('state').touched" class="text-danger">
+                State is required.
+              </div>
+            </div>
+            <div class="form-group">
+              <input [disabled]="!locationForm.valid" type="submit" class="btn btn-danger" style="width: 100%;"
+                  value="Update"><br>
+              <br>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+<footer class="bg-dark fixed-bottom text-center text-white">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2023 Copyright:
+      <a class="text-white" style="text-decoration: none;" href="#">BlackPoolBus</a>
+  </div>
+
+</footer>
+

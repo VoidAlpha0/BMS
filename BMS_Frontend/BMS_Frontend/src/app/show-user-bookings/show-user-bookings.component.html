@@ -1,0 +1,172 @@
+<div class="container-fluid bg">
+    <div class="text-center text-white pt-2">
+        <h2><b><i>BlackPoolBus</i></b></h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-light rounded py-12">
+            <div class="p-4 md-3">
+                <div *ngIf="user">
+                    <h3><b>Welcome to BlackPoolBus! <span class="text-danger"><i>{{user.userName}}</i></span></b></h3>
+                    <small><b>User Id: {{ user.userId }}</b></small><br />
+                    <button class="btn btn-danger float-left" routerLink="/userHome">Home</button>
+                    <button class="btn btn-danger float-right" (click)="logout()">Logout</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="panel bg1 rounded p-5 m-5">
+        <div align="center" class="m-3">
+            <h4><b>Booking Details</b></h4>
+        </div>
+
+        <div *ngIf="notFound" align="center">
+            <h5 class="text-danger">No booking found...</h5>
+        </div>
+
+        <div *ngIf="found">
+            <table  class="table table-striped  ounded">
+                <thead  class="thead-dark">
+                    <tr  class="text-white">
+                        <th>Booking Id</th>
+                        <th>Bus Number</th>
+                        <th>Amount</th>
+                        <th>Booking Date</th>
+                        <th>Booking Time</th>
+                        <th>Payment Status</th>
+                        <th>passenger Count</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let booking of bookings" class="table-striped rounded">
+                    <tr>
+                        <td scope="row">{{booking.bookingId}}</td>
+                        <td>{{booking.busNumber}}</td>
+                        <td>{{booking.totalCost | currency:'INR'}}</td>
+                        <td>{{booking.bookingDate }}</td>
+                        <td>{{booking.bookingTime}}</td>
+                        <td>{{booking.status ? 'Paid': 'Unpaid'}}</td>
+                        <td>{{booking.passengers.length}}</td>
+
+                        <td>
+                            <button class="btn btn-danger " (click)="getPassengers(booking)">Passenger Details</button>
+                            &nbsp;
+                            <button class="btn btn-danger" (click)="getBusDetails(booking.busNumber)">Bus
+                                Details</button>
+                            &nbsp;
+                            <button *ngIf="booking.status == false" class="btn btn-danger" (click)="delete(booking.bookingId)">Cancel Booking</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div><br><br>
+
+        <div class="panel-body" *ngIf="bus">
+            <div class="row">
+                <div  class="textleft col-6">
+                    <h6><b>Bus Number  &nbsp;&nbsp;&nbsp;:</b></h6>
+                </div>
+                <div class="col-6">
+                    <h6>{{ bus.busNumber }}</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="textleft col-6">
+                    <h6><b>From  &nbsp;&nbsp;&nbsp;:</b></h6>
+                </div>
+                <div class="col-6">
+                    <h6>{{ bus.departureBusstop }}</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="textleft col-6">
+                    <h6><b>To  &nbsp;&nbsp;&nbsp;:</b></h6>
+                </div>
+                <div class="col-6">
+                    <h6>{{ bus.arrivalBusstop }}</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="textleft col-6">
+                    <h6><b>Departure date  &nbsp;&nbsp;&nbsp;:</b></h6>
+                </div>
+                <div class="col-6">
+                    <h6>{{ bus.departureDate }}</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="textleft col-6">
+                    <h6><b>Departure Time  &nbsp;&nbsp;&nbsp;:</b></h6>
+                </div>
+                <div class="col-6">
+                    <h6>{{ bus.departureTime }}</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="textleft col-6">
+                    <h6><b>Arrival Date  &nbsp;&nbsp;&nbsp;:</b></h6>
+                </div>
+                <div class="col-6">
+                    <h6>{{ bus.arrivalDate }}</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="textleft col-6">
+                    <h6><b>Arrival Time  &nbsp;&nbsp;&nbsp;:</b></h6>
+                </div>
+                <div class="col-6">
+                    <h6><b>{{ bus.arrivalTime }}</b></h6>
+                </div>
+            </div>
+
+            <br><br>
+
+        </div>
+
+        <div *ngIf="passengers">
+
+            <h6 class="text-white">Passenger Details</h6>
+
+            <table class="table table-striped rounded">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Passenger ID</th>
+                        <th>Passenger Name</th>
+                        <th>Passenger Age</th>
+                        <th>Passenger Luggage</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let passenger of passengers" class="table-striped">
+                    <tr>
+                        <td scope="row">{{passenger.passengerId}}</td>
+                        <td>{{passenger.name}}</td>
+                        <td>{{passenger.age}}</td>
+                        <td>{{passenger.luggage}}</td>
+                        <td><button class="btn btn-danger"
+                                (click)="updatePassenger(passenger.passengerId)">Update</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+<footer class="bg-dark fixed-bottom text-center text-white">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2023 Copyright:
+      <a class="text-white" style="text-decoration: none;" href="#">BlackPoolBus</a>
+  </div>
+
+</footer>
+

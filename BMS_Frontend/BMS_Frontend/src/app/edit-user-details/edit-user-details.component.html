@@ -1,0 +1,54 @@
+<div class="container-fluid bg">
+  <div class="row">
+    <div class="col-sm-12 text-light rounded ">
+      <div class="p-4 md-3">
+        <div>
+          <h3 class="text-center"><b class="text-white"><i>BlackPoolBus</i></b></h3>
+          <button class="btn btn-danger float-left" routerLink="/adminHome">Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="panel bg1 rounded p-5 m-5">
+    <div align="center" class="m-3">
+      <h4><b>Booking Details</b></h4>
+    </div>
+
+
+    <div>
+      <table class="table table-striped rounded" *ngIf="bookings">
+        <thead class="thead-dark">
+          <tr>
+            <th>Booking Id</th>
+            <th>Bus Number</th>
+            <th>Amount</th>
+            <th>Booking Date</th>
+            <th>Booking Time</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody class="table-striped rounded">
+          <tr *ngFor="let booking of bookings">
+            <td>{{booking.bookingId}}</td>
+            <td>{{booking.busNumber}}</td>
+            <td>{{booking.totalCost}}</td>
+            <td>{{booking.bookingDate}}</td>
+            <td>{{booking.bookingTime}}</td>
+            <td>{{booking.status ? 'Paid': 'Unpaid'}}</td>
+            <td><button class="btn btn-success" (click)="updateStatus(booking.bookingId)">Update Status</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <footer class="bg-dark fixed-bottom text-center text-white">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2023 Copyright:
+      <a class="text-white" style="text-decoration: none;" href="#">BlackPoolBus</a>
+    </div>
+
+  </footer>
